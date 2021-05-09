@@ -18,15 +18,15 @@
     <form class="" action="/results" method="post">
       <div class="">
         <label for="">Indoor workout days:</label>
-        <input type="number" class="" name="" value="" id="indoor">
+        <input type="number" class="indoorInput" name="" value="" id="indoor">
       </div>
       <div class="">
         <label for="">Outdoor workout days:</label>
-        <input type="number" class="" name="" value="" id="outdoor">
+        <input type="number" class="outdoorInput" name="" value="" id="outdoor">
       </div>
       <div class="">
         <label for="">Rest days:</label>
-        <input type="number" class="" name="" value="" id="rest">
+        <input type="number" class="restDays" name="" value="" id="rest" readonly>
       </div>
       <div class="">
         <h4>Prefered workout days:</h4>
@@ -48,10 +48,11 @@
       <div class="">
         <button type="submit" name="button">Submit</button>
       </div>
-
-
     </form>
   </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="script.js" charset="utf-8"></script>
 </body>
 
 </html>
