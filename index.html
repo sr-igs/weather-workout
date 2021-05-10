@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <title>Weather Workout</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="css/styles.css">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
 </head>
 
@@ -18,11 +18,11 @@
     <form class="" action="/results" method="post">
       <div class="">
         <label for="">Indoor workout days:</label>
-        <input type="number" class="indoorInput" name="" value="" id="indoor">
+        <input type="number" class="indoorInput" name="indoor" value="" id="indoor">
       </div>
       <div class="">
         <label for="">Outdoor workout days:</label>
-        <input type="number" class="outdoorInput" name="" value="" id="outdoor">
+        <input type="number" class="outdoorInput" name="outdoor" value="" id="outdoor">
       </div>
       <div class="">
         <label for="">Rest days:</label>
@@ -30,20 +30,20 @@
       </div>
       <div class="">
         <h4>Prefered workout days:</h4>
-        <label for="">Monday</label>
-        <input type="checkbox" id="monday" value="">
-        <label for="">Tuesday</label>
-        <input type="checkbox" id="tuesday" value="">
-        <label for="">Wednesday</label>
-        <input type="checkbox" id="wednesday" value="">
-        <label for="">Thursday</label>
-        <input type="checkbox" id="thursday" value="">
-        <label for="">Friday</label>
-        <input type="checkbox" id="friday" value="">
-        <label for="">Saturday</label>
-        <input type="checkbox" id="saturday" value="">
-        <label for="">Sunday</label>
-        <input type="checkbox" id="sunday" value="">
+        <label for="monday">Monday:</label>
+        <input type="checkbox" id="monday" value="" name="mondayCB">
+        <label for="tuesday">Tuesday:</label>
+        <input type="checkbox" id="tuesday" value="" name="tuesdayCB">
+        <label for="wednesday">Wednesday:</label>
+        <input type="checkbox" id="wednesday" value="" name="wednesdayCB">
+        <label for="thursday>Thursday:</label>
+        <input type="checkbox" id="thursday" value="" name="thursdayCB">
+        <label for="friday">Friday:</label>
+        <input type="checkbox" id="friday" value="" name="fridayCB">
+        <label for="saturday">Saturday:</label>
+        <input type="checkbox" id="saturday" value="" name="saturdayCB">
+        <label for="sunday">Sunday:</label>
+        <input type="checkbox" id="sunday" value="" name="sundayCB">
       </div>
       <div class="">
         <button type="submit" name="button">Submit</button>
@@ -52,7 +52,7 @@
   </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="script.js" charset="utf-8"></script>
+<script src="scripts/script.js" charset="utf-8"></script>
 </body>
 
 </html>

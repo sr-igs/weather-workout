@@ -27,7 +27,9 @@ function triggerChanges(origin) {
     restDays = 7 - indoorWorkoutNumber - outdoorWorkoutNumber;
     $(".restDays").val(restDays);
   }else{
-    //Alert here that the action is not possible!
+    alert("You can not have more than 7 days a week!")
+    $(".indoorInput").val(indoorWorkoutNumber);
+    $(".outdoorInput").val(outdoorWorkoutNumber);
   }
 
 }

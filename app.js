@@ -6,13 +6,18 @@ const app = express();
 const port = 3000;
 
 app.use(bodyParser.urlencoded({extended:true}));
+app.use(express.static("public"));
 
 app.get("/",function(req,res){
   res.sendFile(__dirname+"/index.html")
 })
 
 app.post("/results",function(req,res){
-  const apiKey = "dde13eb089b8230fcc731404f219fa4d"; //apikey for openweather
+  let outdoorDays = Number(req.body.outdoor); //Number of outdoor workout days from the request
+  let indoorDays = Number(req.body.indoor); //Number of indoor workout days from the request
+
+  console.log(dayPreference);
+  const apiKey = "dde13eb089b8230fcc731404f219fa4d"; //apikey for openweatherv  - This will have to go in a private file that doesn't get uploaded to git
   let lat = 51.7527;
   let lon =  -0.336;
   const units = "metric";
