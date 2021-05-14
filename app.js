@@ -2,17 +2,34 @@ const express = require("express");
 const https = require("https");
 const bodyParser = require("body-parser");
 const { DateTime } = require("luxon");
+const ejs = require("ejs");
 
 const app = express();
 const port = 3000;
+
+//appResults will be the output of the calculation, and will be passed to the EJS as an object
+const appResults = {
+  firstDay:["Monday","Indoor"],
+  secondDay:["Monday","Indoor"],
+  thirdDay:["Monday","Indoor"],
+  fourthDay:["Monday","Indoor"],
+  fifthDay:["Monday","Indoor"],
+  sixthDay:["Monday","Indoor"],
+  seventhDay:["Monday","Indoor"]
+}
 
 app.use(bodyParser.urlencoded({
   extended: true
 }));
 app.use(express.static("public"));
+app.set('view engine','ejs');
 
 app.get("/", function(req, res) {
-  res.sendFile(__dirname + "/index.html")
+  res.render("index");
+});
+
+app.get("/results",function(req,res){
+  res.render("results",appResults);
 })
 
 app.post("/results", function(req, res) {
@@ -52,7 +69,7 @@ app.post("/results", function(req, res) {
       var hourlyData = weatherData.hourly;
       var dailyData = weatherData.daily;
       doWeatherCalcs(dailyData,indoorDays,outdoorDays,dayPreference);
-      res.sendFile(__dirname + "/result.html")
+      res.redirect("/results")
     });
   });
 })
