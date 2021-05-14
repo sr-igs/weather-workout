@@ -3,12 +3,13 @@ const https = require("https");
 const bodyParser = require("body-parser");
 const { DateTime } = require("luxon");
 const ejs = require("ejs");
+const workoutCalc = require(__dirname="/workoutCalc.js")
 
 const app = express();
 const port = 3000;
 
 //appResults will be the output of the calculation, and will be passed to the EJS as an object
-const appResults = {
+let appResults = {
   firstDay:["Monday","Indoor"],
   secondDay:["Monday","Indoor"],
   thirdDay:["Monday","Indoor"],
@@ -33,20 +34,21 @@ app.get("/results",function(req,res){
 })
 
 app.post("/results", function(req, res) {
-  let outdoorDays = Number(req.body.outdoor); //Number of outdoor workout days from the request
-  let indoorDays = Number(req.body.indoor); //Number of indoor workout days from the request
+  // let outdoorDays = Number(req.body.outdoor); //Number of outdoor workout days from the request
+  // let indoorDays = Number(req.body.indoor); //Number of indoor workout days from the request
+  //
+  // //Need to add code to detect the checkboxes. Challenge is that if checkbox is not marked it won't submit a value to the server!!!
+  // let dayPreference = {monday:false,tuesday:false,wednesday:false,thursday:false,friday:false,saturday:false,sunday:false};
+  // if(typeof(req.body.mondayCB)!=="undefined"){dayPreference.monday=true};
+  // if(typeof(req.body.tuesdayCB)!=="undefined"){dayPreference.tuesday=true};
+  // if(typeof(req.body.wednesdayCB)!=="undefined"){dayPreference.wednesday=true};
+  // if(typeof(req.body.thursdayCB)!=="undefined"){dayPreference.thursday=true};
+  // if(typeof(req.body.fridayCB)!=="undefined"){dayPreference.friday=true};
+  // if(typeof(req.body.saturdayCB)!=="undefined"){dayPreference.saturday=true};
+  // if(typeof(req.body.sundayCB)!=="undefined"){dayPreference.sunday=true};
+  // console.log(dayPreference);
 
-  //Need to add code to detect the checkboxes. Challenge is that if checkbox is not marked it won't submit a value to the server!!!
-  let dayPreference = {monday:false,tuesday:false,wednesday:false,thursday:false,friday:false,saturday:false,sunday:false};
-  if(typeof(req.body.mondayCB)!=="undefined"){dayPreference.monday=true};
-  if(typeof(req.body.tuesdayCB)!=="undefined"){dayPreference.tuesday=true};
-  if(typeof(req.body.wednesdayCB)!=="undefined"){dayPreference.wednesday=true};
-  if(typeof(req.body.thursdayCB)!=="undefined"){dayPreference.thursday=true};
-  if(typeof(req.body.fridayCB)!=="undefined"){dayPreference.friday=true};
-  if(typeof(req.body.saturdayCB)!=="undefined"){dayPreference.saturday=true};
-  if(typeof(req.body.sundayCB)!=="undefined"){dayPreference.sunday=true};
-  console.log(dayPreference);
-
+//MUST REFACTOR THE BELOW!!!!
   const apiKey = "dde13eb089b8230fcc731404f219fa4d"; //apikey for openweatherv  - This will have to go in a private file that doesn't get uploaded to git
   let lat = 51.7527;
   let lon = -0.336;
@@ -82,6 +84,7 @@ app.listen(port, function() {
   console.log(`App is running in port ${port}`)
 })
 
+//Refactor the below too
 function doWeatherCalcs(data,indoor,outdoor,dayPreference) {
   let weatherOutput={
     description:"",
