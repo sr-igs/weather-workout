@@ -63,7 +63,7 @@ app.post("/results", function(req, res) {
 })
 
 app.post("/", function(req, res) {
-  res.sendFile(__dirname + "/index.html");
+  res.redirect("/");
 })
 
 app.listen(port, function() {

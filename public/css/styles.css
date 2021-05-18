@@ -1,3 +1,29 @@
 .results-table{
   border:1px solid black;
+  width:80%;
+}
+
+body{
+  text-align:center;
+}
+
+.title{
+  margin-top:2rem;
+  margin-bottom:2rem;
+}
+
+.input-row{
+  width:40%;
+  margin:auto;
+  margin-bottom:1rem;
+}
+
+.submit-button{
+  margin: 2rem 2rem;
+}
+
+/* Results */
+
+.results-table{
+  margin:auto;
 }

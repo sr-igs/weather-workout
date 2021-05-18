@@ -12,21 +12,33 @@
 <body>
   <div class="title">
     <h1>Weather Workout</h1>
-    <h2>Description</h2>
+    <h4>Choose your workouts based on the weather!</h4>
   </div>
-  <div class="">
+  <div class="container">
     <form class="" action="/results" method="post">
-      <div class="">
-        <label for="">Indoor workout days:</label>
-        <input type="number" class="indoorInput" name="indoor" value="" id="indoor">
+      <div class="row input-row">
+        <div class="col">
+          <label for="indoor">Indoor workout days:</label>
+        </div>
+        <div class="col">
+          <input type="number" class="indoorInput" name="indoor" value="" id="indoor">
+        </div>
       </div>
-      <div class="">
-        <label for="">Outdoor workout days:</label>
-        <input type="number" class="outdoorInput" name="outdoor" value="" id="outdoor">
+      <div class="row input-row">
+        <div class="col">
+          <label for="outdoor">Outdoor workout days:</label>
+        </div>
+        <div class="col">
+          <input type="number" class="outdoorInput" name="outdoor" value="" id="outdoor">
+        </div>
       </div>
-      <div class="">
-        <label for="">Rest days:</label>
-        <input type="number" class="restDays" name="" value="" id="rest" readonly>
+      <div class="row input-row">
+        <div class="col">
+          <label for="rest">Rest days:</label>
+        </div>
+        <div class="col">
+            <input type="number" class="restDays" name="" value="" id="rest" readonly>
+        </div>
       </div>
       <div class="">
         <h4>Prefered workout days:</h4>
@@ -45,8 +57,8 @@
         <label for="sunday">Sunday:</label>
         <input type="checkbox" id="sunday" value="" name="sundayCB">
       </div>
-      <div class="">
-        <button type="submit" name="button">Submit</button>
+      <div class="submit-button">
+        <button type="submit" name="button" class="btn btn-info">Submit</button>
       </div>
     </form>
   </div>
