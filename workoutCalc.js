@@ -36,11 +36,13 @@ exports.doCalcs = function(userReq, weatherData) {
 
   let dateStamps = [];
   let weatherPoints = [];
-  for (var i = 0; i < weatherData.length - 1; i++) {
+  let iconCodes = [];
+  for (var i = 1; i < weatherData.length; i++) {
     let tempDate = new Date(0)
     tempDate.setUTCSeconds(weatherData[i].dt);
     dateStamps.push(tempDate.getDay());
     weatherPoints.push(weatherData[i].weather[0].main)
+    iconCodes.push(weatherData[i].weather[0].icon)
   };
   console.log(dateStamps);
   console.log(weatherPoints);
@@ -60,6 +62,7 @@ exports.doCalcs = function(userReq, weatherData) {
     resultsArray.push([]);
     resultsArray[i][0] = dayToString(dateStamps[i]);
     resultsArray[i][1] = "Rest";
+    resultsArray[i][2] = `<img src="http://openweathermap.org/img/wn/${iconCodes[i]}@2x.png" alt="Weather Icon">`
   };
   //Check any days without rain, check if any of them are prefered workouts, if so assign outdoor workout. If more
   //outdoor workout days than prefered, non rainy days, allocate outdoor workout to those.
@@ -90,8 +93,10 @@ exports.doCalcs = function(userReq, weatherData) {
 
   //If any remaining indoor or outdoor days, assign to pre-determined days
   if (outdoorDays > 0 || indoorDays > 0) {
-    let j = 1;
+    let j = 1;  //This should be Monday
     let iteration = 0;
+    let dateOffsetDate = new Date();
+    let offset = dateOffsetDate.getDay()+1;
     while (outdoorDays > 0 || indoorDays > 0) {
       console.log("Loop");
       switch (j) {
@@ -179,7 +184,7 @@ exports.doCalcs = function(userReq, weatherData) {
       } //END OF SWITCH STATEMENT
       console.log(indoorDays);
       iteration++
-      j = nextStandard(iteration);
+      j = nextStandard(iteration,offset);
     }
   }
 
@@ -227,13 +232,13 @@ function dayToString(day) {
 }
 
 //NOT WORKING CORRECTLY AS IT PRIORITISES THE ARRAY POSITION AND NOT THE DAY!!!
-function nextStandard(i) {
+function nextStandard(i,offset) {
   let iMod = 0;
   if(i>6){
-    iMod = i%6;
+    iMod = i%6 + offset;
     console.log(iMod);
   }else{
-    iMod = i;
+    iMod = i+offset;
   };
 
   switch (iMod) {
