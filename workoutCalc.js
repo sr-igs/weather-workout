@@ -69,6 +69,7 @@ exports.doCalcs = function(userReq, weatherData) {
   //Once outdoor workouts have been set, assign indoor workouts to any left prefered workout days. If none left
   //Prioritise Monday to Friday. Default pref: M -> W -> F -> Tu -> Th -> Sat -> Sun
 
+//ALGORITHM CHANGE START HERE
   //Check prefered days
   for (var i = 0; i < dayPreference.length; i++) {
     if (dayPreference[i]) {
