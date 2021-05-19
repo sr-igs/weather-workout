@@ -66,6 +66,6 @@ app.post("/", function(req, res) {
   res.redirect("/");
 })
 
-app.listen(port, function() {
+app.listen(process.env.PORT || port, function() {
   console.log(`App is running in port ${port}`)
 })
