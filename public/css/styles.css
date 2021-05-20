@@ -1,7 +1,15 @@
-.results-table{
+.custom-table{
   border:1px solid black;
   width:80%;
+  margin:auto;
 }
+
+.pref-table{
+  border-collapse:collapse;
+}
+
+.pref-table td { border-left: 1px solid #000; }
+.pref-table td:first-child { border-left: none; }
 
 body{
   text-align:center;
@@ -23,7 +31,3 @@ body{
 }
 
 /* Results */
-
-.results-table{
-  margin:auto;
-}
