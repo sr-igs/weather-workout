@@ -36,11 +36,13 @@ exports.doCalcs = function(userReq, weatherData) {
 
   let dateStamps = [];
   let weatherPoints = [];
+  let dayPrefAdj = [];
   let iconCodes = [];
   for (var i = 1; i < weatherData.length; i++) {
     let tempDate = new Date(0)
     tempDate.setUTCSeconds(weatherData[i].dt);
     dateStamps.push(tempDate.getDay());
+    dayPrefAdj.push(dayPreference[tempDate.getDay()])
     weatherPoints.push(weatherData[i].weather[0].main)
     iconCodes.push(weatherData[i].weather[0].icon)
   };
@@ -64,130 +66,42 @@ exports.doCalcs = function(userReq, weatherData) {
     resultsArray[i][1] = "Rest";
     resultsArray[i][2] = `<img src="http://openweathermap.org/img/wn/${iconCodes[i]}@2x.png" alt="Weather Icon">`
   };
-  //Check any days without rain, check if any of them are prefered workouts, if so assign outdoor workout. If more
-  //outdoor workout days than prefered, non rainy days, allocate outdoor workout to those.
-  //Once outdoor workouts have been set, assign indoor workouts to any left prefered workout days. If none left
-  //Prioritise Monday to Friday. Default pref: M -> W -> F -> Tu -> Th -> Sat -> Sun
 
-//ALGORITHM CHANGE START HERE
-  //Check prefered days
-  for (var i = 0; i < dayPreference.length; i++) {
-    if (dayPreference[i]) {
-      //It is a prefered workout day
-      if ((weatherPoints[dateStamps.indexOf(i)] !== "Rain") && outdoorDays > 0) {
-        resultsArray[dateStamps.indexOf(i)][1] = "Outdoors";
+  let today = new Date();
+  let todayNumber = today.getDay();
+
+  //At this point I have information about user preference, weather the relevant days of the week, and indoor/outdoor numbers
+  for(var i=0;i<dayPrefAdj.length;i++){
+    if(weatherPoints[i]!=="Rain"&&outdoorDays>0&&dayPrefAdj[i]==true){
+      resultsArray[i][1]="Outdoor";
+      outdoorDays--;
+    }else if(weatherPoints[i]==="Rain"&&indoorDays>0&&dayPrefAdj[i]==true){
+      resultsArray[i][1]="Indoor";
+      indoorDays--
+    }
+  };
+
+  for(var i=0;i<resultsArray.length;i++){
+    if(resultsArray[i][1]==="Rest"){
+      if(weatherPoints[i]!=="Rain"&&outdoorDays>0){
+        resultsArray[i][1]="Outdoor";
         outdoorDays--
-      } else if (indoorDays > 0) {
-        resultsArray[dateStamps.indexOf(i)][1] = "Indoors";
-        indoorDays--;
       }
     }
   };
 
-  //Assign any remaining outdoor days to any non-rainy days
-  for (var i = 0; i < weatherPoints.length; i++) {
-    if (weatherPoints !== "Rain" && outdoorDays > 0) {
-      resultsArray[i][1] = "Outdoors";
-      outdoorDays--;
+  for(var i=0;i<resultsArray.length;i++){
+    if(resultsArray[i][1]==="Rest"){
+      if(indoorDays>0){
+        resultsArray[i][1]="Indoor";
+        indoorDays--;
+      }else if(outdoorDays>0){
+        resultsArray[i][1]="Outdoor";
+        outdoorDays--;
+      }
     }
-  }
+  };
 
-  //If any remaining indoor or outdoor days, assign to pre-determined days
-  if (outdoorDays > 0 || indoorDays > 0) {
-    let j = 1;  //This should be Monday
-    let iteration = 0;
-    let dateOffsetDate = new Date();
-    let offset = dateOffsetDate.getDay()+1;
-    while (outdoorDays > 0 || indoorDays > 0) {
-      console.log("Loop");
-      switch (j) {
-        case 0:
-        if(resultsArray[j][1]==="Rest"){
-          if (outdoorDays > 0) {
-            resultsArray[j][1] = "Outdoors"
-            outdoorDays--
-          } else {
-            resultsArray[j][1] = "Indoors"
-            indoorDays--
-          }
-        };
-          break;
-        case 1:
-        if(resultsArray[j][1]==="Rest"){
-          if (outdoorDays > 0) {
-            resultsArray[j][1] = "Outdoors"
-            outdoorDays--
-          } else {
-            resultsArray[j][1] = "Indoors"
-            indoorDays--
-          }
-        }
-          break;
-        case 2:
-        if(resultsArray[j][1]==="Rest"){
-          if (outdoorDays > 0) {
-            resultsArray[j][1] = "Outdoors"
-            outdoorDays--
-          } else {
-            resultsArray[j][1] = "Indoors"
-            indoorDays--
-          }
-        }
-          break;
-        case 3:
-        if(resultsArray[j][i]==="Rest"){
-          if (outdoorDays > 0) {
-            resultsArray[j][1] = "Outdoors"
-            outdoorDays--
-          } else {
-            resultsArray[j][1] = "Indoors"
-            indoorDays--
-          }
-        }
-          break;
-        case 4:
-        if(resultsArray[j][1]==="Rest"){
-          if (outdoorDays > 0) {
-            resultsArray[j][1] = "Outdoors"
-            outdoorDays--
-          } else {
-            resultsArray[j][1] = "Indoors"
-            indoorDays--
-          }
-        }
-          break;
-        case 5:
-        if(resultsArray[j][1]==="Rest"){
-          if (outdoorDays > 0) {
-            resultsArray[j][1] = "Outdoors"
-            outdoorDays--
-          } else {
-            resultsArray[j][1] = "Indoors"
-            indoorDays--
-          }
-        }
-          break;
-        case 6:
-        if(resultsArray[j][1]==="Rest"){
-          if (outdoorDays > 0) {
-            resultsArray[j][1] = "Outdoors"
-            outdoorDays--
-          } else {
-            resultsArray[j][1] = "Indoors"
-            indoorDays--
-          }
-        }
-          break;
-        default:
-        outdoorDays =0;
-        indoorDays =0;
-
-      } //END OF SWITCH STATEMENT
-      console.log(indoorDays);
-      iteration++
-      j = nextStandard(iteration,offset);
-    }
-  }
 
   //Form app results
   let appResults = {
@@ -230,38 +144,4 @@ function dayToString(day) {
     default:
       return "Error"
   }
-}
-
-//NOT WORKING CORRECTLY AS IT PRIORITISES THE ARRAY POSITION AND NOT THE DAY!!!
-function nextStandard(i,offset) {
-  let iMod = 0;
-  if(i>6){
-    iMod = i%6 + offset;
-    console.log(iMod);
-  }else{
-    iMod = i+offset;
-  };
-
-  switch (iMod) {
-    case 1:
-      return 3
-      break;
-    case 2:
-      return 5
-      break;
-    case 3:
-      return 2
-      break;
-    case 4:
-      return 4
-      break;
-    case 5:
-      return 6
-      break;
-    case 6:
-      return 0
-      break;
-    default:
-
-  };
 }
